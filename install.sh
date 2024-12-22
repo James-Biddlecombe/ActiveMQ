@@ -68,13 +68,13 @@ GRANT CONNECT ON DATABASE activemq TO amq;
 # update the pg_hba.conf to trust the local connections
 vi /var/lib/pgsql/data/pg_hba.conf
     # change these TWO lines from
-    local   all             all                                     ident
+    local   all             all                                     peer
     host    all             all             127.0.0.1/32            ident
     # to these TWO lines, its just replacing ident with trust
     local   all             all                                     trust
     host    all             all             127.0.0.1/32            trust
 # restart the postgres service for the change to take effect
-systemctl restart postgresql.service        # willn eed the root password as we are stil on the postgres user
+systemctl restart postgresql.service        # will need the root password as we are stil on the postgres user
 # test that the user can connect to the database
 psql -U amq -h 127.0.0.1 -d activemq -W
 # go back to the root user
@@ -108,7 +108,7 @@ vi /home/activemq/activemq/conf/jetty.xml
 <property name="host" value="localhost"/>
 # set it to
 <property name="host" value="0.0.0.0"/>
-# download the poostgres jar and correct ownership
+# download the postgres jar and correct ownership
 wget https://jdbc.postgresql.org/download/postgresql-42.6.0.jar
 mv postgresql-42.6.0.jar /home/activemq/activemq/lib/
 chown activemq:activemq /home/activemq/activemq/lib/postgresql-42.6.0.jar
